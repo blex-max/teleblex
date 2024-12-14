@@ -52,6 +52,12 @@ void serialize_scene(tt_serializer_t* stream, scene_state_t* scene,
         else if (s == INIT_SCRIPT)
             stream->write_char(stream->data, 'I');
         else
+            if (s < 9) {
+                stream->write_char(stream->data, s + '1');
+            } else {
+                // letters rather than weird ascii
+                stream->write_char(stream->data, (s - 9) + 'A');
+            }
             stream->write_char(stream->data, s + 49);
 
         for (int l = 0; l < ss_get_script_len(scene, s); l++) {
