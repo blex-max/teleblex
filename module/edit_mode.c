@@ -403,9 +403,7 @@ uint8_t screen_refresh_edit() {
     if (dirty & D_INPUT) {
         bool muted = false;
         char prefix = '1';  // init to 1 for no reason
-        if (script <= 8) {
-            prefix = script + '1';
-        }
+        if (script <= 8) { prefix = script + '1'; }
         else if (script >= 9 && script < REGULAR_SCRIPT_COUNT) {
             prefix = (script - 9) + 'A';
         }

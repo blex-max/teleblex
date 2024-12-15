@@ -51,12 +51,8 @@ void serialize_scene(tt_serializer_t* stream, scene_state_t* scene,
             stream->write_char(stream->data, 'M');
         else if (s == INIT_SCRIPT)
             stream->write_char(stream->data, 'I');
-        else
-            if (s < 9) {
-                stream->write_char(stream->data, s + '1');
-            } else {
-                stream->write_char(stream->data, (s - 9) + 'A');
-            }
+        else if (s < 9) { stream->write_char(stream->data, s + '1'); }
+        else { stream->write_char(stream->data, (s - 9) + 'A'); }
 
         for (int l = 0; l < ss_get_script_len(scene, s); l++) {
             stream->write_char(stream->data, '\n');
@@ -210,11 +206,8 @@ void deserialize_scene(tt_deserializer_t* stream, scene_state_t* scene,
                 s2 = STATE_GRID;
             }
             else {
-                if (c >= '1' && c <= '9') {
-                    script = c - '1';
-                } else {
-                    script = (c - 'A') + 9;
-                }
+                if (c >= '1' && c <= '9') { script = c - '1'; }
+                else { script = (c - 'A') + 9; }
                 if (script < 0 || script >= EDITABLE_SCRIPT_COUNT) {
                     script = NO_SCRIPT;
                 }
