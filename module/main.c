@@ -419,7 +419,7 @@ void handler_PollADC(int32_t data) {
         ss_set_param(&scene_state, adc[1] << 2);
     }
     else if (mode == M_PRESET_R && !(grid_connected && grid_control_mode)) {
-        /* 12 bit adc, so shirt by 12 minus N bits needed
+        /* 12 bit adc, so shift by 12 minus N bits needed
         to index all presets. + 1 for deadzone */
         uint8_t preset = adc[1] >> (12 - SCENE_BITS + 1);
         uint8_t deadzone = preset & 1;

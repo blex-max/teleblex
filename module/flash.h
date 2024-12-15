@@ -10,7 +10,7 @@
 // for preset indexing to work, must be power of 2
 #define SCENE_SLOTS 16
 // number of bits needed to index SCENE_SLOTS slots
-#define SCENE_BITS (31 - __builtin_clz(SCENE_SLOTS - 1) + 1)
+#define SCENE_BITS (32 - __builtin_clz(SCENE_SLOTS - 1))
 
 #define BUTTON_STATE_SIZE (GRID_BUTTON_COUNT >> 3)
 
