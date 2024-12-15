@@ -1,7 +1,8 @@
 #ifndef _SCRIPT_H_
 #define _SCRIPT_H_
 
-#define REGULAR_SCRIPT_COUNT 15
+// standard scripts 1-8, library scripts A-F
+#define REGULAR_SCRIPT_COUNT 14
 
 #define METRO_SCRIPT REGULAR_SCRIPT_COUNT
 #define INIT_SCRIPT (METRO_SCRIPT + 1)

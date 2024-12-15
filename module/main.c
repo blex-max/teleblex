@@ -419,7 +419,9 @@ void handler_PollADC(int32_t data) {
         ss_set_param(&scene_state, adc[1] << 2);
     }
     else if (mode == M_PRESET_R && !(grid_connected && grid_control_mode)) {
-        uint8_t preset = adc[1] >> 6;
+        /* 12 bit adc, so shirt by 12 minus N bits needed
+        to index all presets. + 1 for deadzone */
+        uint8_t preset = adc[1] >> (12 - SCENE_BITS + 1);
         uint8_t deadzone = preset & 1;
         preset >>= 1;
         if (!deadzone || abs(preset - get_preset()) > 1)
@@ -902,6 +904,13 @@ bool process_global_keys(uint8_t k, uint8_t m, bool is_held_key) {
         run_script(&scene_state, INIT_SCRIPT);
         return true;
     }
+    // shift-<F1> through <F6>: run scripts (A-F)
+    else if (mod_only_shift(m) && k >= HID_F1 && k <= HID_F6) {
+        // with the new script number constants, I *think*
+        // + 8 will index correctly
+        run_script(&scene_state, k - HID_F1 + 8);
+        return true;
+    }
     // alt-<F1> through alt-<F8>: edit corresponding script
     else if (mod_only_alt(m) && k >= HID_F1 && k <= HID_F8) {
         set_edit_mode_script(k - HID_F1);
@@ -917,6 +926,12 @@ bool process_global_keys(uint8_t k, uint8_t m, bool is_held_key) {
     // alt-<F10>: edit init script
     else if (mod_only_alt(m) && k == HID_F10) {
         set_edit_mode_script(INIT_SCRIPT);
+        set_mode(M_EDIT);
+        return true;
+    }
+    // alt-shift-<F1> through shift-alt-<F6>: edit scripts (A-F)
+    else if (mod_only_shift_alt(m) && k >= HID_F1 && k <= HID_F6) {
+        set_edit_mode_script(k - HID_F1 + 8);
         set_mode(M_EDIT);
         return true;
     }
