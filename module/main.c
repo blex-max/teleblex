@@ -904,7 +904,7 @@ bool process_global_keys(uint8_t k, uint8_t m, bool is_held_key) {
         run_script(&scene_state, INIT_SCRIPT);
         return true;
     }
-    // shift-<F1> through <F6>: run scripts (A-F)
+    // shift-<F1> through <F6>: run scripts (9-E)
     else if (mod_only_shift(m) && k >= HID_F1 && k <= HID_F6) {
         // with the new script number constants, I *think*
         // + 8 will index correctly
@@ -929,7 +929,7 @@ bool process_global_keys(uint8_t k, uint8_t m, bool is_held_key) {
         set_mode(M_EDIT);
         return true;
     }
-    // alt-shift-<F1> through shift-alt-<F6>: edit scripts (A-F)
+    // alt-shift-<F1> through shift-alt-<F6>: edit scripts (9-E)
     else if (mod_only_shift_alt(m) && k >= HID_F1 && k <= HID_F6) {
         set_edit_mode_script(k - HID_F1 + 8);
         set_mode(M_EDIT);

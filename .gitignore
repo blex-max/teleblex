@@ -57,3 +57,4 @@ __pycache__/
 /docs/testServe/
 compile_commands.json
 patch.diff
+.clangd
